@@ -7,23 +7,18 @@ using namespace std;
 int main() {
     const int n = 5; // Размер матрицы
     int matrix[n][n];
-    int positiveElements[n * (n - 1) / 2]; // Массив для хранения положительных элементов
+    int positive[n * (n - 1) / 2]; // Массив для хранения положительных элементов и их максимальное число
     int count = 0; // Счётчик положительных элементов
 
     // Инициализация генератора случайных чисел
-    srand(time(0));
+    srand(time(NULL));
 
-    // Заполнение матрицы случайными числами от -50 до 50
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            matrix[i][j] = rand() % 101 - 50; // [-50, 50]
-        }
-    }
-
+    // Заполнение матрицы случайными числами
     // Вывод сгенерированной матрицы
     cout << "Сгенерированная матрица:\n";
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
+            matrix[i][j] = rand() % 21 - 10;
             cout << matrix[i][j] << "\t";
         }
         cout << "\n";
@@ -33,21 +28,22 @@ int main() {
     for (int i = 1; i < n; ++i) { // Строки ниже главной побочной диагонали
         for (int j = n - i; j < n; ++j) { // Столбцы правее побочной диагонали
             if (matrix[i][j] > 0) {
-                positiveElements[count++] = matrix[i][j];
+                positive[count++] = matrix[i][j];
             }
         }
     }
 
     // Вывод результатов
-    cout << "\nПоложительные элементы ниже побочной диагонали: ";
+    cout << endl;
+    cout << "Положительные элементы ниже побочной диагонали: ";
     if (count == 0) {
         cout << "нет положительных элементов.\n";
-    } else {
+    } 
+    else {
         for (int i = 0; i < count; ++i) {
-            cout << positiveElements[i] << " ";
+            cout << positive[i] << " ";
         }
         cout << "\n";
     }
-
-    return 0;
+    
 }
