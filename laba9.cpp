@@ -1,49 +1,45 @@
 #include <iostream>
 #include <vector>
-#include <sstream>
-#include <algorithm>
+#include <cctype>
 
 using namespace std;
-
-// Функция для подсчета общей длины всех слов в предложении
-int calculateLength(const string& sentence) {
-    int length = 0;
-    stringstream ss(sentence);
-    string word;
-    while (ss >> word) {
-        length += word.length();
-    }
-    return length;
-}
 
 int main() {
     int n;
     cout << "Введите количество фраз: ";
     cin >> n;
-    cin.ignore();  // Игнорируем символ новой строки после числа
 
-    vector<string> sentences(n);
-    vector<pair<string, int>> sentencesWithLength;
+    vector<string> strs(n);  // Некоторое количество строк
 
     // Ввод фраз
     cout << "Введите фразы:" << endl;
     for (int i = 0; i < n; ++i) {
-        getline(cin, sentences[i]);
-        int length = calculateLength(sentences[i]);
-        sentencesWithLength.push_back(make_pair(sentences[i], length));
+        cin >> strs[i];
     }
+    
+    // Сортировка методом пузырька
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            // Подсчёт длины слов для текущих фраз
+            int len_1 = 0, len_2 = 0;
+            for (char c : strs[j]) {
+                if (!isspace(c)) len_1++;
+            }
+            for (char c : strs[j + 1]) {
+                if (!isspace(c)) len_2++;
+            }
 
-    // Сортировка фраз по общей длине слов в порядке убывания
-    sort(sentencesWithLength.begin(), sentencesWithLength.end(), 
-        [](const pair<string, int>& a, const pair<string, int>& b) {
-            return a.second > b.second;
-        });
-
+            // Меняем местами, если текущая фраза меньше следующей
+            if (len_1 < len_2) {
+                swap(strs[j], strs[j + 1]);
+            }
+        }
+    }
+    
     // Вывод фраз в отсортированном порядке
-    cout << "\nФразы в порядке убывания общей длины слов:" << endl;
-    for (const auto& sentence : sentencesWithLength) {
-        cout << sentence.first << endl;
+    cout << "Фразы в порядке убывания общей длины слов:" << endl;
+    for (const string& str : strs) {
+        cout << str<< endl;
     }
 
-    return 0;
 }
