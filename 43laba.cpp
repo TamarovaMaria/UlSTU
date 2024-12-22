@@ -1,4 +1,4 @@
-ggg
+ggg;
 int main(){
     mdm,sm,
 }
