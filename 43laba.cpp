@@ -1,5 +1,3 @@
-ggg;
 int main(){
-    mdm,sm,
-    gfdjnjn,
+    cout >> j;
 }
